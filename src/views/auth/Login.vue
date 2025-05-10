@@ -16,24 +16,23 @@ const errorMessage = ref('')
 const showPassword = ref(false)
 
 const login = async () => {
-  router.push('/dashboard')
-  // if (!form.email || !form.password) {
-  //   errorMessage.value = 'Пожалуйста, заполните все поля'
-  //   return
-  // }
-  //
-  // isLoading.value = true
-  // errorMessage.value = ''
-  //
-  // try {
-  //   await userStore.login(form.email, form.password)
-  //   router.push('/dashboard')
-  // } catch (error: any) {
-  //   console.error('Login error:', error)
-  //   errorMessage.value = error.message || 'Ошибка входа, проверьте свои данные'
-  // } finally {
-  //   isLoading.value = false
-  // }
+  if (!form.email || !form.password) {
+    errorMessage.value = 'Пожалуйста, заполните все поля'
+    return
+  }
+
+  isLoading.value = true
+  errorMessage.value = ''
+
+  try {
+    await userStore.login(form.email, form.password)
+    router.push('/dashboard')
+  } catch (error: any) {
+    console.error('Login error:', error)
+    errorMessage.value = error.message || 'Ошибка входа, проверьте свои данные'
+  } finally {
+    isLoading.value = false
+  }
 }
 
 const togglePasswordVisibility = () => {
